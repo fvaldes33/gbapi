@@ -1,0 +1,5 @@
+class SearchType {
+
+}
+
+export { SearchType };
