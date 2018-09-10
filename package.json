@@ -1,6 +1,6 @@
 {
   "name": "@geobarriers/gbapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Front end api for geo barriers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,5 +14,27 @@
     "core-js": "^2.5.7",
     "typescript": "^3.0.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fvaldes33/gbapi.git"
+  },
+  "keywords": [
+    "geobarriers",
+    "geoJson",
+    "qgis",
+    "maps",
+    "boundaries",
+    "polygon"
+  ],
+  "bugs": {
+    "url": "https://github.com/fvaldes33/gbapi/issues"
+  },
+  "homepage": "https://github.com/fvaldes33/gbapi",
+  "contributors": [
+    {
+      "name": "Franco Valdes",
+      "email": "franco@geobarriers.com"
+    }
+  ]
 }
