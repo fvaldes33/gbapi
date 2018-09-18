@@ -63,44 +63,45 @@ var GBApi = /** @class */ (function () {
     /**
      *
      * @param data Zip|County|State
+     * @param fresh boolean
+     * @return Promise
      */
-    GBApi.prototype.loadGeoJson = function (data) {
+    GBApi.prototype.loadGeoJson = function (data, fresh) {
         var _this = this;
+        if (fresh === void 0) { fresh = true; }
         if (!this.map) {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
-        this.getGeoJson(data)
+        return this.getGeoJson(data)
             .then(function (json) {
-            _this.addGeoJson(json);
+            _this.addGeoJson(json, fresh);
+            return true;
+        })
+            .catch(function (err) {
+            return err;
         });
     };
     /**
-     *
+     * Retrieve geoJson data from api
      * @param data
+     * @return json
      */
     GBApi.prototype.getGeoJson = function (data) {
-        var _this = this;
         // handle caching
-        var cachedUrl = data.getUri();
-        var cache = this.getCache(cachedUrl);
-        if (cache) {
-            return new Promise(function (resolve, reject) {
-                resolve(cache);
-            });
-        }
-        var endpoint = "" + this.baseUrl + cachedUrl;
+        var apiRequestUri = data.getUri();
+        var endpoint = "" + this.baseUrl + apiRequestUri;
         endpoint += "&apiToken=" + this.key;
         endpoint += "&url=" + window.location.href;
         return fetch(endpoint)
             .then(function (res) { return res.json(); })
             .then(function (json) {
-            if (json.data) {
-                _this.setCache(cachedUrl, json.data);
-                return json.data;
+            if (json.error) {
+                throw json.error.msg;
             }
+            return json.data;
         })
             .catch(function (err) {
-            console.log(err);
+            return err;
         });
     };
     /**
@@ -125,23 +126,6 @@ var GBApi = /** @class */ (function () {
             });
         });
         this.map.fitBounds(bounds);
-    };
-    /**
-     * set api key
-     */
-    GBApi.prototype.setCache = function (key, value) {
-        if (window.localStorage) {
-            window.localStorage["barriers-" + key] = JSON.stringify(value);
-        }
-    };
-    /**
-     * get api key
-     */
-    GBApi.prototype.getCache = function (key) {
-        if (window.localStorage && window.localStorage["barriers-" + key]) {
-            return JSON.parse(window.localStorage["barriers-" + key]);
-        }
-        return null;
     };
     Object.defineProperty(GBApi.prototype, "features", {
         /**

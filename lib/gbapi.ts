@@ -11,12 +11,12 @@ class GBApi {
     /**
      * base api url
      */
-    baseUrl = 'https://api.geobarriers.io/api/';
+    baseUrl: string = 'https://api.geobarriers.io/api/';
 
     /**
      * handle on google
      */
-    google = null;
+    google: any = null;
 
     /**
      * api key string
@@ -76,47 +76,47 @@ class GBApi {
     /**
      * 
      * @param data Zip|County|State
+     * @param fresh boolean
+     * @return Promise
      */
-    loadGeoJson(data: Zip|County|State) {
+    loadGeoJson(data: Zip|County|State, fresh: boolean = true) {
         if (!this.map) {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
 
-        this.getGeoJson(data)
+        return this.getGeoJson(data)
             .then((json: any) => {
-                this.addGeoJson(json);
+                this.addGeoJson(json, fresh);
+                return true;
             })
+            .catch((err: any) => {
+                return err;
+            });
     }
 
     /**
-     * 
+     * Retrieve geoJson data from api
      * @param data
+     * @return json
      */
     getGeoJson(data: Zip|County|State) {
         // handle caching
-        const cachedUrl = data.getUri();
-        const cache = this.getCache(cachedUrl);
-        if (cache) {
-            return new Promise((resolve: any, reject: any) => {
-                resolve(cache);
-            });
-        }
-
-        let endpoint: string = `${this.baseUrl}${cachedUrl}`;
+        const apiRequestUri: string = data.getUri();
+        let endpoint: string = `${this.baseUrl}${apiRequestUri}`;
         endpoint += `&apiToken=${this.key}`;
         endpoint += `&url=${window.location.href}`;
 
         return fetch(endpoint)
             .then((res: any) => res.json())
             .then((json: any) => {
-                if (json.data) {
-                    this.setCache(cachedUrl, json.data);
-                    return json.data;
+                if (json.error) {
+                    throw json.error.msg;
                 }
+                return json.data;
             })
             .catch((err: any) => {
-                console.log(err);
-            })
+                return err;
+            });
     }
 
     /**
@@ -124,7 +124,7 @@ class GBApi {
      * @param geoJson 
      * @param fresh 
      */
-    addGeoJson(geoJson: FeatureCollection, fresh = true) {
+    addGeoJson(geoJson: FeatureCollection, fresh: boolean = true) {
         if (fresh) {
             this.map.data.forEach((feature: any) => {
                 this.map.data.remove(feature);
@@ -143,25 +143,6 @@ class GBApi {
         })
 
         this.map.fitBounds(bounds);
-    }
-
-    /**
-     * set api key
-     */
-    setCache(key: string, value: string) {
-        if (window.localStorage) {
-            (<any>window).localStorage[`barriers-${key}`] = JSON.stringify(value);
-        }
-    }
-
-    /**
-     * get api key
-     */
-    getCache(key: string) {
-        if ((<any>window).localStorage && (<any>window).localStorage[`barriers-${key}`]) {
-            return JSON.parse((<any>window).localStorage[`barriers-${key}`]);
-        }
-        return null;
     }
 
     /**

@@ -7,7 +7,7 @@ declare class GBApi {
     /**
      * handle on google
      */
-    google: null;
+    google: any;
     /**
      * api key string
      */
@@ -40,27 +40,22 @@ declare class GBApi {
     /**
      *
      * @param data Zip|County|State
+     * @param fresh boolean
+     * @return Promise
      */
-    loadGeoJson(data: Zip | County | State): void;
+    loadGeoJson(data: Zip | County | State, fresh?: boolean): Promise<any>;
     /**
-     *
+     * Retrieve geoJson data from api
      * @param data
+     * @return json
      */
-    getGeoJson(data: Zip | County | State): any;
+    getGeoJson(data: Zip | County | State): Promise<any>;
     /**
      * Add geojson to the map
      * @param geoJson
      * @param fresh
      */
     addGeoJson(geoJson: FeatureCollection, fresh?: boolean): void;
-    /**
-     * set api key
-     */
-    setCache(key: string, value: string): void;
-    /**
-     * get api key
-     */
-    getCache(key: string): any;
     /**
      * set feaures
      */
