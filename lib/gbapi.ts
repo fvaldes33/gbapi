@@ -84,14 +84,16 @@ class GBApi {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
 
-        return this.getGeoJson(data)
-            .then((json: any) => {
-                this.addGeoJson(json, fresh);
-                return true;
-            })
-            .catch((err: any) => {
-                return err;
-            });
+        return new Promise((resolve: any, reject: any) => {
+            this.getGeoJson(data)
+                .then((json: any) => {
+                    this.addGeoJson(json, fresh);
+                    resolve(true);
+                })
+                .catch((err: any) => {
+                    reject(err);
+                });
+        });
     }
 
     /**

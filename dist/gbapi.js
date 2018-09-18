@@ -72,13 +72,15 @@ var GBApi = /** @class */ (function () {
         if (!this.map) {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
-        return this.getGeoJson(data)
-            .then(function (json) {
-            _this.addGeoJson(json, fresh);
-            return true;
-        })
-            .catch(function (err) {
-            return err;
+        return new Promise(function (resolve, reject) {
+            _this.getGeoJson(data)
+                .then(function (json) {
+                _this.addGeoJson(json, fresh);
+                resolve(true);
+            })
+                .catch(function (err) {
+                reject(err);
+            });
         });
     };
     /**

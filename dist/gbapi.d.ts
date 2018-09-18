@@ -43,7 +43,7 @@ declare class GBApi {
      * @param fresh boolean
      * @return Promise
      */
-    loadGeoJson(data: Zip | County | State, fresh?: boolean): Promise<any>;
+    loadGeoJson(data: Zip | County | State, fresh?: boolean): any;
     /**
      * Retrieve geoJson data from api
      * @param data
