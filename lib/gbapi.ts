@@ -97,26 +97,28 @@ class GBApi {
     /**
      * Retrieve geoJson data from api
      * @param data
-     * @return json
+     * @return Promise
      */
-    getGeoJson(data: Zip|County|State) {
+    getGeoJson(data: Zip|County|State): Promise<any> {
         // handle caching
         const apiRequestUri: string = data.getUri();
         let endpoint: string = `${this.baseUrl}${apiRequestUri}`;
         endpoint += `&apiToken=${this.key}`;
         endpoint += `&url=${window.location.href}`;
 
-        return fetch(endpoint)
-            .then((res: any) => res.json())
-            .then((json: any) => {
-                if (json.error) {
-                    throw json.error.msg;
-                }
-                return json.data;
-            })
-            .catch((err: any) => {
-                return err;
-            });
+        return new Promise((resolve: any, reject: any) => {
+            fetch(endpoint)
+                .then((res: any) => res.json())
+                .then((json: any) => {
+                    if (json.data) {
+                        resolve(json.data);
+                    }
+                    reject(json.error);
+                })
+                .catch((err: any) => {
+                    reject(err);
+                })
+        });
     }
 
     /**

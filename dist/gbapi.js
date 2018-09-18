@@ -84,7 +84,7 @@ var GBApi = /** @class */ (function () {
     /**
      * Retrieve geoJson data from api
      * @param data
-     * @return json
+     * @return Promise
      */
     GBApi.prototype.getGeoJson = function (data) {
         // handle caching
@@ -92,16 +92,18 @@ var GBApi = /** @class */ (function () {
         var endpoint = "" + this.baseUrl + apiRequestUri;
         endpoint += "&apiToken=" + this.key;
         endpoint += "&url=" + window.location.href;
-        return fetch(endpoint)
-            .then(function (res) { return res.json(); })
-            .then(function (json) {
-            if (json.error) {
-                throw json.error.msg;
-            }
-            return json.data;
-        })
-            .catch(function (err) {
-            return err;
+        return new Promise(function (resolve, reject) {
+            fetch(endpoint)
+                .then(function (res) { return res.json(); })
+                .then(function (json) {
+                if (json.data) {
+                    resolve(json.data);
+                }
+                reject(json.error);
+            })
+                .catch(function (err) {
+                reject(err);
+            });
         });
     };
     /**

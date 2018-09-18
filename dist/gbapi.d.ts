@@ -47,7 +47,7 @@ declare class GBApi {
     /**
      * Retrieve geoJson data from api
      * @param data
-     * @return json
+     * @return Promise
      */
     getGeoJson(data: Zip | County | State): Promise<any>;
     /**
