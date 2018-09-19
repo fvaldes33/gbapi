@@ -148,6 +148,7 @@ var GBApi = /** @class */ (function () {
             });
         }
         if (fresh) {
+            this.features = [];
             map.data.forEach(function (feature) {
                 map.data.remove(feature);
             });

@@ -162,6 +162,7 @@ class GBApi {
     }
 
     if (fresh) {
+      this.features = [];
       map.data.forEach((feature: any) => {
         map.data.remove(feature);
       });
