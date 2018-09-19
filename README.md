@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/npm/v/@geobarriers/gbapi.svg?colorB=6AC8F8)](https://www.npmjs.com/package/@geobarriers/gbapi)
 [![Downloads](https://img.shields.io/npm/dt/@geobarriers/gbapi.svg?colorB=6AC8F8)](https://www.npmjs.com/package/@geobarriers/gbapi)
-(https://npm.runkit.com/@geobarriers/gbapi)
 
 The Geobarriers Javascript library provides convenient access to the Geobarriers API from
 applications written in client-side JavaScript.
