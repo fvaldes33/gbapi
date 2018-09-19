@@ -1,4 +1,4 @@
-# Geobarriers Javascript Library
+# Geobarriers Javascript Library [Client Side Only]
 
 [![Version](https://img.shields.io/npm/v/@geobarriers/gbapi.svg?colorB=6AC8F8)](https://www.npmjs.com/package/@geobarriers/gbapi)
 [![Downloads](https://img.shields.io/npm/dt/@geobarriers/gbapi.svg?colorB=6AC8F8)](https://www.npmjs.com/package/@geobarriers/gbapi)

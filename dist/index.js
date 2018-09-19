@@ -1,2 +1,4 @@
 "use strict";
-module.exports = require('./ts-output.js').default;
+Object.defineProperty(exports, "__esModule", { value: true });
+var gbapi_1 = require("./gbapi");
+exports.GBApi = gbapi_1.GBApi;
