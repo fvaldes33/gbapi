@@ -17,6 +17,10 @@ declare class GBApi {
      */
     private _FEATURES;
     /**
+     *
+     */
+    private listener;
+    /**
      * base api url
      */
     private baseUrl;

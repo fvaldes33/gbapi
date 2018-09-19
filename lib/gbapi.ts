@@ -24,6 +24,11 @@ class GBApi {
   private _FEATURES: any = [];
 
   /**
+   * 
+   */
+  private listener: any = false;
+
+  /**
    * base api url
    */
   private baseUrl: string = 'https://api.geobarriers.io/api/';
@@ -41,7 +46,7 @@ class GBApi {
     this.map = params.map;
 
     if (this.map) {
-      this.map.data.addListener('addfeature', (e: any) => {
+      this.listener = this.map.data.addListener('addfeature', (e: any) => {
         this.features.push(e.feature);
       });
     }
@@ -150,6 +155,12 @@ class GBApi {
    * @param fresh
    */
   public addGeoJson(geoJson: IFeatureCollection, map: any, fresh: boolean = true) {
+    if (map && !this.listener) {
+      this.listener = map.data.addListener('addfeature', (e: any) => {
+        this.features.push(e.feature);
+      });
+    }
+
     if (fresh) {
       map.data.forEach((feature: any) => {
         map.data.remove(feature);

@@ -28,6 +28,10 @@ var GBApi = /** @class */ (function () {
          */
         this._FEATURES = [];
         /**
+         *
+         */
+        this.listener = false;
+        /**
          * base api url
          */
         this.baseUrl = 'https://api.geobarriers.io/api/';
@@ -37,7 +41,7 @@ var GBApi = /** @class */ (function () {
         this.key = params.key;
         this.map = params.map;
         if (this.map) {
-            this.map.data.addListener('addfeature', function (e) {
+            this.listener = this.map.data.addListener('addfeature', function (e) {
                 _this.features.push(e.feature);
             });
         }
@@ -136,7 +140,13 @@ var GBApi = /** @class */ (function () {
      * @param fresh
      */
     GBApi.prototype.addGeoJson = function (geoJson, map, fresh) {
+        var _this = this;
         if (fresh === void 0) { fresh = true; }
+        if (map && !this.listener) {
+            this.listener = map.data.addListener('addfeature', function (e) {
+                _this.features.push(e.feature);
+            });
+        }
         if (fresh) {
             map.data.forEach(function (feature) {
                 map.data.remove(feature);
