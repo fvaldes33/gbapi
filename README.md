@@ -130,22 +130,22 @@ try {
 ### Response Object
 ```js
 {
-	"data": {
-		"type": "FeatureCollection",
-		"features": [
-			{
-				"type": "Feature",
-				"properties": {
-					//...
-				},
-				"geometry": {
-					"type": "MultiPolygon",
-					"coordinates": [
-					    //...
-					]
-				}
-			}
-		]
-	}
+    "data": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    //...
+                },
+                "geometry": {
+                    "type": "MultiPolygon",
+                    "coordinates": [
+                        //...
+                    ]
+                }
+            }
+        ]
+    }
 }
 ```
