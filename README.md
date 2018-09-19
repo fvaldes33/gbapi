@@ -150,3 +150,8 @@ try {
     }
 }
 ```
+
+### TODO
+- Need to write some test
+- Need to provide browser support [polyfill.io](https://polyfill.io/v2/docs/)
+- Add Canada postal codes FSA & LDU
