@@ -5,7 +5,7 @@
 [![Try on RunKit](https://img.shields.io/badge/try--it--on--runkit-@geobarriers/gbapi-blue.svg?colorB=6AC8F8)](https://npm.runkit.com/@geobarriers/gbapi)
 
 The Geobarriers Javascript library provides convenient access to the Geobarriers API from
-applications written in client-side or server-side JavaScript.
+applications written in client-side JavaScript.
 
 The REST API that allows developers to easily integrate zipcode, county, and state boundaries into websites, Google Maps, GIS systems or any client applications that can consume GeoJson.
 
