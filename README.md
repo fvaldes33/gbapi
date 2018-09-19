@@ -18,6 +18,8 @@ See the [API docs](https://www.geobarriers.io/docs).
 Install the package with:
 
     npm install @geobarriers/gbapi --save
+
+    // or using yarn
     yarn add @geobarriers/gbapi
 
 ## Usage
