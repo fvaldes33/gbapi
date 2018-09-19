@@ -118,7 +118,7 @@ The Geobarriers library provides a method to load geojson data directly onto the
 
 //... google map stuff 
 
-const gb = new GBApi({ key: 'your-api-key', map });
+const gb = new GBApi({ key: 'your-api-key', map }); // <- must init with map object
 try {
     await gb.zip([28208, 28203]).loadGeoJson(true);
     
@@ -127,6 +127,23 @@ try {
 }
 
 ```
+
+You can also just pass the map into the `addGeoJson` method as well.
+
+``` js
+
+//... google map stuff 
+
+const gb = new GBApi({ key: 'your-api-key' }); //<- no map provided at init
+try {
+    const geoJson = await gb.zip([28208, 28203]).getGeoJson();
+    gb.addGeoJson(geoJson, map, true); //<- true argument will clear out previous data layer on your map
+} catch (error) {
+    // ...handle errors
+}
+
+```
+
 
 ### Response Object
 ```js

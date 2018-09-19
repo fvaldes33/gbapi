@@ -53,9 +53,10 @@ declare class GBApi {
     /**
      * Add geojson to the map
      * @param geoJson
+     * @param map [google map]
      * @param fresh
      */
-    addGeoJson(geoJson: IFeatureCollection, fresh?: boolean): void;
+    private addGeoJson;
     /**
      * set feaures
      */

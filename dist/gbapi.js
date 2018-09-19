@@ -93,7 +93,7 @@ var GBApi = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             _this.getGeoJson()
                 .then(function (json) {
-                _this.addGeoJson(json, fresh);
+                _this.addGeoJson(json, _this.map, fresh);
                 resolve(true);
             })
                 .catch(function (err) {
@@ -132,25 +132,25 @@ var GBApi = /** @class */ (function () {
     /**
      * Add geojson to the map
      * @param geoJson
+     * @param map [google map]
      * @param fresh
      */
-    GBApi.prototype.addGeoJson = function (geoJson, fresh) {
-        var _this = this;
+    GBApi.prototype.addGeoJson = function (geoJson, map, fresh) {
         if (fresh === void 0) { fresh = true; }
         if (fresh) {
-            this.map.data.forEach(function (feature) {
-                _this.map.data.remove(feature);
+            map.data.forEach(function (feature) {
+                map.data.remove(feature);
             });
         }
         var google = window.google;
         var bounds = new google.maps.LatLngBounds();
-        this.map.data.addGeoJson(geoJson);
+        map.data.addGeoJson(geoJson);
         this.features.forEach(function (feature) {
             feature.getGeometry().forEachLatLng(function (latlng) {
                 bounds.extend(latlng);
             });
         });
-        this.map.fitBounds(bounds);
+        map.fitBounds(bounds);
     };
     Object.defineProperty(GBApi.prototype, "features", {
         /**

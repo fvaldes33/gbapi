@@ -103,7 +103,7 @@ class GBApi {
     return new Promise((resolve: any, reject: any) => {
       this.getGeoJson()
         .then((json: any) => {
-          this.addGeoJson(json, fresh);
+          this.addGeoJson(json, this.map, fresh);
           resolve(true);
         })
         .catch((err: any) => {
@@ -146,19 +146,20 @@ class GBApi {
   /**
    * Add geojson to the map
    * @param geoJson
+   * @param map [google map]
    * @param fresh
    */
-  public addGeoJson(geoJson: IFeatureCollection, fresh: boolean = true) {
+  private addGeoJson(geoJson: IFeatureCollection, map: any, fresh: boolean = true) {
     if (fresh) {
-      this.map.data.forEach((feature: any) => {
-        this.map.data.remove(feature);
+      map.data.forEach((feature: any) => {
+        map.data.remove(feature);
       });
     }
 
     const google = (window as any).google;
     const bounds = new google.maps.LatLngBounds();
 
-    this.map.data.addGeoJson(geoJson);
+    map.data.addGeoJson(geoJson);
 
     this.features.forEach((feature: any) => {
       feature.getGeometry().forEachLatLng((latlng: any) => {
@@ -166,7 +167,7 @@ class GBApi {
       });
     });
 
-    this.map.fitBounds(bounds);
+    map.fitBounds(bounds);
   }
 
   /**
