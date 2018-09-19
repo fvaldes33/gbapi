@@ -149,7 +149,7 @@ class GBApi {
    * @param map [google map]
    * @param fresh
    */
-  private addGeoJson(geoJson: IFeatureCollection, map: any, fresh: boolean = true) {
+  public addGeoJson(geoJson: IFeatureCollection, map: any, fresh: boolean = true) {
     if (fresh) {
       map.data.forEach((feature: any) => {
         map.data.remove(feature);
