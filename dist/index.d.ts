@@ -1,3 +1,3 @@
 import { GBApi } from './gbapi';
 export default GBApi;
-export { GBApi, GBApiOptions, Geometry, Feature, FeatureCollection, Zip, County, CountyParams, State } from './gbapi';
+export { County, GBApi, ICountyParams, IFeature, IFeatureCollection, IGBApiOptions, IGeometry, State, Zip, } from './gbapi';

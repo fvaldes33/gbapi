@@ -15,11 +15,11 @@ var County = /** @class */ (function () {
          */
         this.params = {
             county: [],
-            state: ''
+            state: '',
         };
         this.params = {
             county: params.county,
-            state: params.state
+            state: params.state,
         };
     }
     /**

@@ -1,13 +1,5 @@
-import { Zip, County, CountyParams, State } from './search-types';
+import { County, ICountyParams, State, Zip } from './search-types';
 declare class GBApi {
-    /**
-     * base api url
-     */
-    baseUrl: string;
-    /**
-     * features on map
-     */
-    _features: any;
     /**
      * api key string
      */
@@ -21,10 +13,18 @@ declare class GBApi {
      */
     searchInstance: any;
     /**
+     * features on map
+     */
+    private _FEATURES;
+    /**
+     * base api url
+     */
+    private baseUrl;
+    /**
      *
      * @param params GBApiOptions
      */
-    constructor(params: GBApiOptions);
+    constructor(params: IGBApiOptions);
     /**
      *
      */
@@ -32,7 +32,7 @@ declare class GBApi {
     /**
      *
      */
-    county(params: CountyParams): GBApi;
+    county(params: ICountyParams): GBApi;
     /**
      *
      */
@@ -55,7 +55,7 @@ declare class GBApi {
      * @param geoJson
      * @param fresh
      */
-    addGeoJson(geoJson: FeatureCollection, fresh?: boolean): void;
+    addGeoJson(geoJson: IFeatureCollection, fresh?: boolean): void;
     /**
      * set feaures
      */
@@ -64,21 +64,21 @@ declare class GBApi {
     */
     features: any;
 }
-interface GBApiOptions {
+interface IGBApiOptions {
     key: string;
     map?: any;
 }
-interface Geometry {
+interface IGeometry {
     type: string;
     coordinates: any;
 }
-interface Feature {
+interface IFeature {
     type: string;
     properties: any;
-    geometry: Geometry;
+    geometry: IGeometry;
 }
-interface FeatureCollection {
+interface IFeatureCollection {
     type: string;
-    features: Feature[];
+    features: IFeature[];
 }
-export { GBApi, GBApiOptions, Geometry, Feature, FeatureCollection, Zip, County, CountyParams, State };
+export { GBApi, IGBApiOptions, IGeometry, IFeature, IFeatureCollection, Zip, County, ICountyParams, State };

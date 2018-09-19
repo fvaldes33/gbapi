@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var search_types_1 = require("./search-types");
-exports.Zip = search_types_1.Zip;
 exports.County = search_types_1.County;
 exports.State = search_types_1.State;
+exports.Zip = search_types_1.Zip;
 var GBApi = /** @class */ (function () {
     /**
      *
@@ -11,14 +11,6 @@ var GBApi = /** @class */ (function () {
      */
     function GBApi(params) {
         var _this = this;
-        /**
-         * base api url
-         */
-        this.baseUrl = 'https://api.geobarriers.io/api/';
-        /**
-         * features on map
-         */
-        this._features = [];
         /**
          * api key string
          */
@@ -31,6 +23,14 @@ var GBApi = /** @class */ (function () {
          *
          */
         this.searchInstance = null;
+        /**
+         * features on map
+         */
+        this._FEATURES = [];
+        /**
+         * base api url
+         */
+        this.baseUrl = 'https://api.geobarriers.io/api/';
         if (!params.key) {
             throw new Error('GeoBarriers::error | No key provided');
         }
@@ -157,7 +157,7 @@ var GBApi = /** @class */ (function () {
          * get features
          */
         get: function () {
-            return this._features;
+            return this._FEATURES;
         },
         /**
          * set feaures
@@ -166,7 +166,7 @@ var GBApi = /** @class */ (function () {
             if (!Array.isArray(value)) {
                 value = [value];
             }
-            this._features = value;
+            this._FEATURES = value;
         },
         enumerable: true,
         configurable: true

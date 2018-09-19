@@ -1,3 +1,3 @@
 export { Zip } from './zip';
-export { County, CountyParams } from './county';
+export { County, ICountyParams } from './county';
 export { State } from './state';
