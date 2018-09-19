@@ -1,5 +1,0 @@
-class SearchType {
-
-}
-
-export { SearchType };

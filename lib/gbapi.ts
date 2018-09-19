@@ -14,24 +14,24 @@ class GBApi {
     baseUrl: string = 'https://api.geobarriers.io/api/';
 
     /**
-     * handle on google
+     * features on map
      */
-    google: any = null;
+    _features: any = [];
 
     /**
      * api key string
      */
-    _key: string = '';
+    key: string = '';
 
     /**
      * map handle
      */
-    _map: any = null;
+    map: any = null;
 
     /**
-     * features on map
+     * 
      */
-    _features: any = [];
+    searchInstance: any = null;
 
     /**
      * 
@@ -39,7 +39,7 @@ class GBApi {
      */
     constructor(params: GBApiOptions) {
         if (!params.key) {
-            throw new Error('No key provided');
+            throw new Error('GeoBarriers::error | No key provided');
         }
 
         this.key = params.key;
@@ -55,22 +55,39 @@ class GBApi {
     /**
      * 
      */
-    zip(codes: any) {
-        return new Zip(codes);
+    zip(codes: any): GBApi {
+        if (!Array.isArray(codes)) {
+            codes = [codes];
+        }
+        this.searchInstance = new Zip(codes);
+        return this;
     }
 
     /**
      * 
      */
-    county(params: CountyParams) {
-        return new County(params);
+    county(params: CountyParams): GBApi {
+        if (!params.state) {
+            throw new Error('GeoBarriers::error | County search requires a state');
+        }
+
+        if (params.county && !Array.isArray(params.county)) {
+            params.county = [params.county];
+        }
+
+        this.searchInstance = new County(params);
+        return this;
     }
 
     /**
      * 
      */
-    state(states: any) {
-        return new State(states);
+    state(states: any): GBApi {
+        if (!Array.isArray(states)) {
+            states = [states];
+        }
+        this.searchInstance = new State(states);
+        return this;
     }
 
     /**
@@ -79,13 +96,17 @@ class GBApi {
      * @param fresh boolean
      * @return Promise
      */
-    loadGeoJson(data: Zip|County|State, fresh: boolean = true) {
+    loadGeoJson(fresh: boolean = true): Promise<any> {
         if (!this.map) {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
 
+        if (!this.searchInstance) {
+            throw new Error('GeoBarriers::error | No search provided');
+        }
+
         return new Promise((resolve: any, reject: any) => {
-            this.getGeoJson(data)
+            this.getGeoJson()
                 .then((json: any) => {
                     this.addGeoJson(json, fresh);
                     resolve(true);
@@ -101,9 +122,13 @@ class GBApi {
      * @param data
      * @return Promise
      */
-    getGeoJson(data: Zip|County|State): Promise<any> {
+    getGeoJson(): Promise<any> {
         // handle caching
-        const apiRequestUri: string = data.getUri();
+        if (!this.searchInstance) {
+            throw new Error('GeoBarriers::error | No search provided');
+        }
+        
+        const apiRequestUri: string = this.searchInstance.getUri();
         let endpoint: string = `${this.baseUrl}${apiRequestUri}`;
         endpoint += `&apiToken=${this.key}`;
         endpoint += `&url=${window.location.href}`;
@@ -119,7 +144,7 @@ class GBApi {
                 })
                 .catch((err: any) => {
                     reject(err);
-                })
+                });
         });
     }
 
@@ -165,42 +190,7 @@ class GBApi {
     get features() {
         return this._features;
     }
-
-    /**
-     * set google map
-     */
-    set map(value) {
-        this._map = value;
-    }
-
-    /**
-     * get map
-     */
-    get map() {
-        if (this._map) {
-            return this._map;
-        }
-        return null;
-    }
-
-    /**
-     * set api key
-     */
-    set key(value: string) {
-        this._key = value;
-    }
-
-    /**
-     * get api key
-     */
-    get key() {
-        if (this._key) {
-            return this._key;
-        }
-        return '';
-    }
 }
-
 
 interface GBApiOptions {
     key: string;

@@ -1,5 +1,4 @@
-import { SearchType } from './search-type';
-declare class County extends SearchType {
+declare class County {
     /**
      * zipcode endpoint
      */

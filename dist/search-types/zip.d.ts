@@ -1,5 +1,4 @@
-import { SearchType } from './search-type';
-declare class Zip extends SearchType {
+declare class Zip {
     /**
      * zipcode endpoint
      */

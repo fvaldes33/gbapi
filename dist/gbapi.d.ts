@@ -5,21 +5,21 @@ declare class GBApi {
      */
     baseUrl: string;
     /**
-     * handle on google
-     */
-    google: any;
-    /**
-     * api key string
-     */
-    _key: string;
-    /**
-     * map handle
-     */
-    _map: any;
-    /**
      * features on map
      */
     _features: any;
+    /**
+     * api key string
+     */
+    key: string;
+    /**
+     * map handle
+     */
+    map: any;
+    /**
+     *
+     */
+    searchInstance: any;
     /**
      *
      * @param params GBApiOptions
@@ -28,28 +28,28 @@ declare class GBApi {
     /**
      *
      */
-    zip(codes: any): Zip;
+    zip(codes: any): GBApi;
     /**
      *
      */
-    county(params: CountyParams): County;
+    county(params: CountyParams): GBApi;
     /**
      *
      */
-    state(states: any): State;
+    state(states: any): GBApi;
     /**
      *
      * @param data Zip|County|State
      * @param fresh boolean
      * @return Promise
      */
-    loadGeoJson(data: Zip | County | State, fresh?: boolean): any;
+    loadGeoJson(fresh?: boolean): Promise<any>;
     /**
      * Retrieve geoJson data from api
      * @param data
      * @return Promise
      */
-    getGeoJson(data: Zip | County | State): Promise<any>;
+    getGeoJson(): Promise<any>;
     /**
      * Add geojson to the map
      * @param geoJson
@@ -63,20 +63,6 @@ declare class GBApi {
     * get features
     */
     features: any;
-    /**
-     * set google map
-     */
-    /**
-    * get map
-    */
-    map: any;
-    /**
-     * set api key
-     */
-    /**
-    * get api key
-    */
-    key: string;
 }
 interface GBApiOptions {
     key: string;

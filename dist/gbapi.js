@@ -16,23 +16,23 @@ var GBApi = /** @class */ (function () {
          */
         this.baseUrl = 'https://api.geobarriers.io/api/';
         /**
-         * handle on google
-         */
-        this.google = null;
-        /**
-         * api key string
-         */
-        this._key = '';
-        /**
-         * map handle
-         */
-        this._map = null;
-        /**
          * features on map
          */
         this._features = [];
+        /**
+         * api key string
+         */
+        this.key = '';
+        /**
+         * map handle
+         */
+        this.map = null;
+        /**
+         *
+         */
+        this.searchInstance = null;
         if (!params.key) {
-            throw new Error('No key provided');
+            throw new Error('GeoBarriers::error | No key provided');
         }
         this.key = params.key;
         this.map = params.map;
@@ -46,19 +46,34 @@ var GBApi = /** @class */ (function () {
      *
      */
     GBApi.prototype.zip = function (codes) {
-        return new search_types_1.Zip(codes);
+        if (!Array.isArray(codes)) {
+            codes = [codes];
+        }
+        this.searchInstance = new search_types_1.Zip(codes);
+        return this;
     };
     /**
      *
      */
     GBApi.prototype.county = function (params) {
-        return new search_types_1.County(params);
+        if (!params.state) {
+            throw new Error('GeoBarriers::error | County search requires a state');
+        }
+        if (params.county && !Array.isArray(params.county)) {
+            params.county = [params.county];
+        }
+        this.searchInstance = new search_types_1.County(params);
+        return this;
     };
     /**
      *
      */
     GBApi.prototype.state = function (states) {
-        return new search_types_1.State(states);
+        if (!Array.isArray(states)) {
+            states = [states];
+        }
+        this.searchInstance = new search_types_1.State(states);
+        return this;
     };
     /**
      *
@@ -66,14 +81,17 @@ var GBApi = /** @class */ (function () {
      * @param fresh boolean
      * @return Promise
      */
-    GBApi.prototype.loadGeoJson = function (data, fresh) {
+    GBApi.prototype.loadGeoJson = function (fresh) {
         var _this = this;
         if (fresh === void 0) { fresh = true; }
         if (!this.map) {
             throw new Error('GeoBarriers::error | No map provided | Use getGeoJson method to get geoJson data');
         }
+        if (!this.searchInstance) {
+            throw new Error('GeoBarriers::error | No search provided');
+        }
         return new Promise(function (resolve, reject) {
-            _this.getGeoJson(data)
+            _this.getGeoJson()
                 .then(function (json) {
                 _this.addGeoJson(json, fresh);
                 resolve(true);
@@ -88,9 +106,12 @@ var GBApi = /** @class */ (function () {
      * @param data
      * @return Promise
      */
-    GBApi.prototype.getGeoJson = function (data) {
+    GBApi.prototype.getGeoJson = function () {
         // handle caching
-        var apiRequestUri = data.getUri();
+        if (!this.searchInstance) {
+            throw new Error('GeoBarriers::error | No search provided');
+        }
+        var apiRequestUri = this.searchInstance.getUri();
         var endpoint = "" + this.baseUrl + apiRequestUri;
         endpoint += "&apiToken=" + this.key;
         endpoint += "&url=" + window.location.href;
@@ -146,44 +167,6 @@ var GBApi = /** @class */ (function () {
                 value = [value];
             }
             this._features = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GBApi.prototype, "map", {
-        /**
-         * get map
-         */
-        get: function () {
-            if (this._map) {
-                return this._map;
-            }
-            return null;
-        },
-        /**
-         * set google map
-         */
-        set: function (value) {
-            this._map = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GBApi.prototype, "key", {
-        /**
-         * get api key
-         */
-        get: function () {
-            if (this._key) {
-                return this._key;
-            }
-            return '';
-        },
-        /**
-         * set api key
-         */
-        set: function (value) {
-            this._key = value;
         },
         enumerable: true,
         configurable: true

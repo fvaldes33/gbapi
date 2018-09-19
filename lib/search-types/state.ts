@@ -1,6 +1,4 @@
-import { SearchType } from './search-type';
-
-class State extends SearchType {
+class State {
 
     /**
      * zipcode endpoint
@@ -17,7 +15,6 @@ class State extends SearchType {
      * @param codes 
      */
     constructor(states: any) {
-        super();
         this.params = states;
     }
 

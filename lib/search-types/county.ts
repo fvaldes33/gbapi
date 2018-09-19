@@ -1,6 +1,4 @@
-import { SearchType } from './search-type';
-
-class County extends SearchType {
+class County {
 
     /**
      * zipcode endpoint
@@ -20,7 +18,6 @@ class County extends SearchType {
      * @param codes 
      */
     constructor(params: CountyParams) {
-        super();
         this.params = {
             county: params.county,
             state: params.state

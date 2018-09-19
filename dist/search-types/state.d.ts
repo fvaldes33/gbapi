@@ -1,5 +1,4 @@
-import { SearchType } from './search-type';
-declare class State extends SearchType {
+declare class State {
     /**
      * zipcode endpoint
      */
