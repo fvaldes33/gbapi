@@ -86,9 +86,17 @@ County search type can take a string or array of counties and a state abbreviati
 const gb = new GBApi({ key: 'your-api-key' });
 try {
     const geojson = await gb.county({ 
-        county: ['Union', 'Mecklenburg'], 
+        county: 'Union',
         state: 'NC' 
     }).getGeoJson();
+
+    //... or multiple counties 
+    const geojson = await gb.county([
+        { county: 'Union', state: 'NC' },
+        { county: 'York', state: 'SC' }
+    ]).getGeoJson();
+
+
     //... do geojson things
 } catch (error) {
     // ...handle errors
