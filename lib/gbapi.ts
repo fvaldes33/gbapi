@@ -24,7 +24,7 @@ class GBApi {
   private _FEATURES: any = [];
 
   /**
-   * 
+   *
    */
   private listener: any = false;
 
@@ -66,13 +66,9 @@ class GBApi {
   /**
    *
    */
-  public county(params: ICountyParams): GBApi {
-    if (!params.state) {
-      throw new Error('GeoBarriers::error | County search requires a state');
-    }
-
-    if (params.county && !Array.isArray(params.county)) {
-      params.county = [params.county];
+  public county(params: ICountyParams | ICountyParams[]): GBApi {
+    if (!Array.isArray(params)) {
+      params = [params];
     }
 
     this.searchInstance = new County(params);

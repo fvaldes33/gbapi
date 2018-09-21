@@ -60,11 +60,8 @@ var GBApi = /** @class */ (function () {
      *
      */
     GBApi.prototype.county = function (params) {
-        if (!params.state) {
-            throw new Error('GeoBarriers::error | County search requires a state');
-        }
-        if (params.county && !Array.isArray(params.county)) {
-            params.county = [params.county];
+        if (!Array.isArray(params)) {
+            params = [params];
         }
         this.searchInstance = new search_types_1.County(params);
         return this;

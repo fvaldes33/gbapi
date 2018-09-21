@@ -7,36 +7,38 @@ class County {
   /**
    * zipcode array
    */
-  public params: ICountyParams = {
-    county: [],
-    state: '',
-  };
+  public params: ICountyParams[] = [
+    {
+      county: '',
+      state: '',
+    },
+  ];
 
   /**
    * constructor
    * @param codes
    */
-  constructor(params: ICountyParams) {
-    this.params = {
-      county: params.county,
-      state: params.state,
-    };
+  constructor(params: ICountyParams[]) {
+    this.params = params;
   }
 
   /**
    *
    */
   public getUri() {
-    return `${this.endpoint}${this.params.county.join(',')}&state=${this.params.state}`;
+    const queryString = this.params.map((param: ICountyParams) => {
+      return `${param.county}|${param.state}`;
+    });
+    return `${this.endpoint}${queryString.join(',')}`;
   }
 
   /**
    * add code
    * @param code
    */
-  public addCounty(county: string) {
-    if (!this.params.county.includes(county)) {
-      this.params.county.push(county);
+  public addCounty(county: ICountyParams) {
+    if (!this.params.includes(county)) {
+      this.params.push(county);
     }
   }
 
@@ -44,18 +46,11 @@ class County {
    * remove code
    * @param code
    */
-  public removeCode(county: string) {
-    const index = this.params.county.indexOf(county);
+  public removeCounty(county: ICountyParams) {
+    const index = this.params.indexOf(county);
     if (index > -1) {
-      this.params.county.splice(index, 1);
+      this.params.splice(index, 1);
     }
-  }
-
-  /**
-   *
-   */
-  public addState(state: string) {
-    this.params.state = state;
   }
 }
 

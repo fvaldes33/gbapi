@@ -6,12 +6,12 @@ declare class County {
     /**
      * zipcode array
      */
-    params: ICountyParams;
+    params: ICountyParams[];
     /**
      * constructor
      * @param codes
      */
-    constructor(params: ICountyParams);
+    constructor(params: ICountyParams[]);
     /**
      *
      */
@@ -20,16 +20,12 @@ declare class County {
      * add code
      * @param code
      */
-    addCounty(county: string): void;
+    addCounty(county: ICountyParams): void;
     /**
      * remove code
      * @param code
      */
-    removeCode(county: string): void;
-    /**
-     *
-     */
-    addState(state: string): void;
+    removeCounty(county: ICountyParams): void;
 }
 interface ICountyParams {
     county: any;

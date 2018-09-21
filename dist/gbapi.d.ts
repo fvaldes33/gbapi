@@ -36,7 +36,7 @@ declare class GBApi {
     /**
      *
      */
-    county(params: ICountyParams): GBApi;
+    county(params: ICountyParams | ICountyParams[]): GBApi;
     /**
      *
      */
