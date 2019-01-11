@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var search_types_1 = require("./search-types");
 exports.County = search_types_1.County;
+exports.Fsa = search_types_1.Fsa;
 exports.State = search_types_1.State;
 exports.Zip = search_types_1.Zip;
 var GBApi = /** @class */ (function () {
@@ -74,6 +75,16 @@ var GBApi = /** @class */ (function () {
             states = [states];
         }
         this.searchInstance = new search_types_1.State(states);
+        return this;
+    };
+    /**
+     *
+     */
+    GBApi.prototype.fsa = function (codes) {
+        if (!Array.isArray(codes)) {
+            codes = [codes];
+        }
+        this.searchInstance = new search_types_1.Fsa(codes);
         return this;
     };
     /**

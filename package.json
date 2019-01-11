@@ -1,6 +1,6 @@
 {
   "name": "@geobarriers/gbapi",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "description": "Front end api for geo barriers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

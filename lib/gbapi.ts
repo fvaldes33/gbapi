@@ -1,4 +1,4 @@
-import { County, ICountyParams, State, Zip } from './search-types';
+import { County, Fsa, ICountyParams, State, Zip } from './search-types';
 
 declare var Promise: any;
 
@@ -83,6 +83,17 @@ class GBApi {
       states = [states];
     }
     this.searchInstance = new State(states);
+    return this;
+  }
+
+  /**
+   *
+   */
+  public fsa(codes: any): GBApi {
+    if (!Array.isArray(codes)) {
+      codes = [codes];
+    }
+    this.searchInstance = new Fsa(codes);
     return this;
   }
 
@@ -217,4 +228,4 @@ interface IFeatureCollection {
   features: IFeature[];
 }
 
-export { GBApi, IGBApiOptions, IGeometry, IFeature, IFeatureCollection, Zip, County, ICountyParams, State };
+export { Fsa, GBApi, IGBApiOptions, IGeometry, IFeature, IFeatureCollection, Zip, County, ICountyParams, State };

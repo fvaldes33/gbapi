@@ -6,3 +6,5 @@ var county_1 = require("./county");
 exports.County = county_1.County;
 var state_1 = require("./state");
 exports.State = state_1.State;
+var fsa_1 = require("./fsa");
+exports.Fsa = fsa_1.Fsa;

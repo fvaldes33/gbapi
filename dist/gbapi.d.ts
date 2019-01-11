@@ -1,4 +1,4 @@
-import { County, ICountyParams, State, Zip } from './search-types';
+import { County, Fsa, ICountyParams, State, Zip } from './search-types';
 declare class GBApi {
     /**
      * api key string
@@ -41,6 +41,10 @@ declare class GBApi {
      *
      */
     state(states: any): GBApi;
+    /**
+     *
+     */
+    fsa(codes: any): GBApi;
     /**
      *
      * @param data Zip|County|State
@@ -86,4 +90,4 @@ interface IFeatureCollection {
     type: string;
     features: IFeature[];
 }
-export { GBApi, IGBApiOptions, IGeometry, IFeature, IFeatureCollection, Zip, County, ICountyParams, State };
+export { Fsa, GBApi, IGBApiOptions, IGeometry, IFeature, IFeatureCollection, Zip, County, ICountyParams, State };
