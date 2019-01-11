@@ -63,6 +63,7 @@ There are currently 3 search types:
 - zip code
 - county 
 - state
+- fsa (Canada)
 
 #### Zip Search
 Zip search type can take a string or array of zip codes.
@@ -112,6 +113,21 @@ State search type can take a string or array of states abbreviation.
 const gb = new GBApi({ key: 'your-api-key' });
 try {
     const geojson = await gb.county(['Florida', 'Georgia']).getGeoJson();
+    //... do geojson things
+} catch (error) {
+    // ...handle errors
+}
+
+```
+
+#### Fsa Search
+Fsa search type can take a string or array of fsa codes.
+
+``` js
+
+const gb = new GBApi({ key: 'your-api-key' });
+try {
+    const geojson = await gb.fsa(["A0A", "A0B"]).getGeoJson();
     //... do geojson things
 } catch (error) {
     // ...handle errors
